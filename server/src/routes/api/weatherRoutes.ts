@@ -3,6 +3,9 @@ import { Router, type Request, type Response } from 'express';
 import HistoryService from './server/src/service/historyService.ts';
 import WeatherService from './server/src/service/weatherService.ts';
 
+console.log(process.env.API_KEY);
+console.log(process.env.API_BASE_URL);
+
 const router = Router();
 
 // TODO: POST Request with city name to retrieve weather data
