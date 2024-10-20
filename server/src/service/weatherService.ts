@@ -25,30 +25,35 @@ class WeatherService {
   }
   // TODO: Define the baseURL, API key, and city name properties
   // TODO: Create fetchLocationData method
-  private async fetchLocationData(query: string): Promise<Coordinates> {
-    const response = await axios.get(`${this.baseURL}/geocode/v1/json`, {
-      params: {
-        q: query,
-        key: this.apiKey,
-      },
-    });
+  private async fetchLocationData(query: string): {
+    const response = await axios.get(`${this.baseURL}/geocode/v1/json`,
+    )};
     return this.destructureLocationData(response.data);
   }
   // TODO: Create destructureLocationData method
-  private destructureLocationData(locationData: Coordinates): Coordinates {return {
+  private destructureLocationData(locationData: Coordinates): Coordinates {
+    return {
     lat: locationData.results[0].geometry.location.lat,
     lon: locationData.results[0].geometry.location.lng,
   };
 }
   // TODO: Create buildGeocodeQuery method
-  private buildGeocodeQuery(): string {}
+  private buildGeocodeQuery(city: string): string {
+    return `${this.baseURL}/geocode/v1/json?q=${encodeURIComponent(city)}&key=${this.apiKey}`;
+}
   // TODO: Create buildWeatherQuery method
-  private buildWeatherQuery(coordinates: Coordinates): string {return `${this.baseURL}/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${this.apiKey}`;
+  private buildWeatherQuery(coordinates: Coordinates): string {
+    return `${this.baseURL}/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${this.apiKey}`;
 }
   // TODO: Create fetchAndDestructureLocationData method
-  private async fetchAndDestructureLocationData() {}
+  private async fetchAndDestructureLocationData(query: string) {
+    const url = this.buildGeocodeQuery(query);
+    const response = await axios.get(url);
+    return this.destructureLocationData(response.data);
+  }
   // TODO: Create fetchWeatherData method
-  private async fetchWeatherData(coordinates: Coordinates): any {const response = await axios.get(this.buildWeatherQuery(coordinates));
+  private async fetchWeatherData(coordinates: Coordinates): any {
+    const response = await axios.get(this.buildWeatherQuery(coordinates));
     return this.parseCurrentWeather(response.data);
   }
   // TODO: Build parseCurrentWeather method
