@@ -21,7 +21,7 @@ API: Weather API for fetching weather data
 ## Installation
 To get started with the Weather App, follow these steps:
 1 - Clone the repository:
-git clone https://github.com/yourusername/weather-app.git
+git clone 
 
 2 - Navigate to the project directory:
 cd weather-app
@@ -30,8 +30,8 @@ cd weather-app
 npm install
 
 4 - Create a .env file in the root directory and add your API credentials:
-API_KEY=your_api_key
-API_BASE_URL=https://api.example.com
+API_KEY=fed874b2edc53c8025c323d645f90eb1
+API_BASE_URL=https://api.openweathermap.org
 
 5 - Start the server:
 npm start
