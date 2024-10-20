@@ -21,10 +21,9 @@ API: Weather API for fetching weather data
 ## Installation
 To get started with the Weather App, follow these steps:
 1 - Clone the repository:
-git clone 
-
+git clone https://github.com/Liciaav/Licia-Weather.app.git
 2 - Navigate to the project directory:
-cd weather-app
+cd Licia-Weather.app
 
 3 - Install the required packages:
 npm install
