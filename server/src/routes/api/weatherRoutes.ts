@@ -15,9 +15,9 @@ router.post('/', (req: Request, res: Response) => {
     return res.status(400).json({erro: 'City name is required.'});
   }
   try{
-    const weatherData = await WeatherService.WheatherByCity(cityName);
+    const weatherData = WeatherService.WheatherByCity(cityName);
   // TODO: save city to search history
-  await HistoryService.addCity({
+    HistoryService.addCity({
     city:cityName,
     date:new Date(),
   })
@@ -28,7 +28,7 @@ router.post('/', (req: Request, res: Response) => {
 });
 
 // TODO: GET search history
-router.get('/history', async (req: Request, res: Response) => {try {
+router.get('/history', async (_req: Request, res: Response) => {try {
   const history = await HistoryService.getCities();
   return res.status(200).json(history);
 } catch (error) {
@@ -45,6 +45,5 @@ try {
   return res.status(500).json({ error: 'Failed to delete city from history.' });
 }
 });
-}
 
 export default router;
