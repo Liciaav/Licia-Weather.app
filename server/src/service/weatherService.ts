@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import axios from 'axios';
+import axios from 'axios'; 
 dotenv.config();
 
 // TODO: Define an interface for the Coordinates object
@@ -9,27 +9,41 @@ interface Coordinates {
 }
 // TODO: Define a class for the Weather object
 class Weather {
-  constructor(tempF, windSpeed, humidity, icon, iconDescription) {
+  icon: any;
+  iconDescription: string;
+  tempF: number;
+  windSpeed: number;
+  humidity: number;
+
+  constructor(icon: any, iconDescription: string, tempF: number, windSpeed: number, humidity: number) {
+    this.icon = icon;
+    this.iconDescription = iconDescription;
     this.tempF = tempF;
     this.windSpeed = windSpeed;
     this.humidity = humidity;
-    this.icon = icon;
-    this.iconDescription = iconDescription;
   }
 }
+console.log(Weather);
+
 // TODO: Complete the WeatherService class
 class WeatherService {
   constructor() {
     this.baseURL = process.env.API_BASE_URL;
     this.apiKey = process.env.API_KEY;
   }
+
   // TODO: Define the baseURL, API key, and city name properties
   // TODO: Create fetchLocationData method
-  private async fetchLocationData(query: string): {
-    const response = await axios.get(`${this.baseURL}/geocode/v1/json`,
+  private async fetchLocationData(query: string): Promise<Coordinates> {
+    const response = await axios.get(`${this.baseURL}/geocode/v1/json`, {
+      params: {
+        q: query,
+        key: this.apiKey,
+      },
+    }
     )};
     return this.destructureLocationData(response.data);
-  }
+  
   // TODO: Create destructureLocationData method
   private destructureLocationData(locationData: Coordinates): Coordinates {
     return {
@@ -52,7 +66,7 @@ class WeatherService {
     return this.destructureLocationData(response.data);
   }
   // TODO: Create fetchWeatherData method
-  private async fetchWeatherData(coordinates: Coordinates): any {
+  private async fetchWeatherData(coordinates: Coordinates):any {
     const response = await axios.get(this.buildWeatherQuery(coordinates));
     return this.parseCurrentWeather(response.data);
   }
@@ -76,3 +90,4 @@ class WeatherService {
 }
 
 export default new WeatherService();
+
