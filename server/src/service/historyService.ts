@@ -5,7 +5,15 @@ dotenv.config();
 
 // TODO: Define a City class with name and id properties
 class City {
-  constructor(city, date, icon, iconDescription, tempF, windSpeed, humidity) {
+  city: string;
+  date: number;
+  icon: any;
+  iconDescription: string;
+  tempF: number;
+  windSpeed: number;
+  humidity: number;
+
+  constructor(city: string, date: number, icon: any, iconDescription: string, tempF: number, windSpeed: number, humidity: number) {
     this.city = city;
     this.date = date;
     this.icon = icon;
@@ -15,11 +23,13 @@ class City {
     this.humidity = humidity;
   }
 }
+console.log(City);
 
 // TODO: Complete the HistoryService class
 class HistoryService {
+  filePath: string;
   constructor() {
-    this.filePath = path.join(__dirname, 'searchHistory.json'); // Adjust the path as necessary
+    this.filePath = path.join(__dirname, 'searchHistory.json'); 
   }
   // TODO: Define a read method that reads from the searchHistory.json file
   private async read() {
@@ -28,9 +38,9 @@ class HistoryService {
     return JSON.parse(data);
   } catch (error) {
     if (error.code === 'ENOENT') {
-      return []; // File doesn't exist, return empty array
+      return [];
     }
-    throw error; // Other errors
+    throw error; 
   }
 }
   // TODO: Define a write method that writes the updated cities array to the searchHistory.json file
@@ -41,7 +51,7 @@ class HistoryService {
   // TODO: Define a getCities method that reads the cities from the searchHistory.json file and returns them as an array of City objects
   async getCities() {
     const citiesData = await this.read();
-    return citiesData.map(city => new City(
+    return citiesData.map((city: { city: string; date: number; icon: any; iconDescription: string; tempF: number; windSpeed: number; humidity: number; }) => new City(
       city.city,
       city.date,
       city.icon,
@@ -52,7 +62,7 @@ class HistoryService {
     ));
   }
   // TODO Define an addCity method that adds a city to the searchHistory.json file
-  async addCity(city: string) {
+  async addCity(cityData:any) {
     const cities = await this.getCities();
     const newCity = new City(
       cityData.city,
@@ -69,7 +79,7 @@ class HistoryService {
   // * BONUS TODO: Define a removeCity method that removes a city from the searchHistory.json file
   async removeCity(id: string) { 
     const cities = await this.getCities();
-    const updatedCities = cities.filter((city, index) => index.toString() !== id);
+    const updatedCities = cities.filter((_city: any, index: { toString: () => string; }) => index.toString() !== id);
     await this.write(updatedCities);
   }
 }
