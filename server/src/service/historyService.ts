@@ -36,8 +36,9 @@ class HistoryService {
     try {
     const data = await fs.readFile(this.filePath, 'utf-8');
     return JSON.parse(data);
-  } catch (error) {
+  } catch (error:any) {
     if (error.code === 'ENOENT') {
+      console.log(error);
       return [];
     }
     throw error; 
