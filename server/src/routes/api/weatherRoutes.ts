@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from 'express';
-import HistoryService from '../service/historyService.ts';
-import WeatherService from '../service/weatherService.ts';
+import HistoryService from '../../service/historyService.js';
+import WeatherService from '../../service/weatherService.js';
 
 console.log(process.env.API_KEY);
 console.log(process.env.API_BASE_URL);
@@ -15,7 +15,7 @@ router.post('/', (req: Request, res: Response) => {
     return res.status(400).json({erro: 'City name is required.'});
   }
   try{
-    const weatherData = WeatherService.WheatherByCity(cityName);
+    const weatherData = WeatherService.getWeatherForCity(cityName);
   // TODO: save city to search history
     HistoryService.addCity({
     city:cityName,
@@ -47,4 +47,3 @@ try {
 });
 
 export default router;
-
