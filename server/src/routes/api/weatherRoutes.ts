@@ -1,9 +1,16 @@
 import { Router, type Request, type Response } from 'express';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 import HistoryService from '../../service/historyService.js';
 import WeatherService from '../../service/weatherService.js';
 
+console.log(process.env);
+console.log("Start");
 console.log(process.env.API_KEY);
 console.log(process.env.API_BASE_URL);
+console.log("end");
 
 const router = Router();
 
