@@ -1,5 +1,4 @@
 import fs from 'fs/promises';
-import path from 'node:path';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -27,14 +26,10 @@ console.log(City);
 
 // TODO: Complete the HistoryService class
 class HistoryService {
-  filePath: string;
-  constructor() {
-    this.filePath = path.join(__dirname, 'searchHistory.json'); 
-  }
   // TODO: Define a read method that reads from the searchHistory.json file
   private async read() {
     try {
-    const data = await fs.readFile(this.filePath, 'utf-8');
+    const data = await fs.readFile('db/db.json', 'utf-8');
     return JSON.parse(data);
   } catch (error:any) {
     if (error.code === 'ENOENT') {
@@ -46,7 +41,7 @@ class HistoryService {
 }
   // TODO: Define a write method that writes the updated cities array to the searchHistory.json file
   private async write(cities: City[]) {
-    await fs.writeFile(this.filePath, JSON.stringify(cities, null, 2));
+    await fs.writeFile('db/db.json', JSON.stringify(cities, null, 2));
   }
 
   // TODO: Define a getCities method that reads the cities from the searchHistory.json file and returns them as an array of City objects

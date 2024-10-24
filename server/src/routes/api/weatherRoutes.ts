@@ -1,6 +1,5 @@
 import { Router, type Request, type Response } from 'express';
 import dotenv from 'dotenv';
-
 dotenv.config();
 
 import HistoryService from '../../service/historyService.js';

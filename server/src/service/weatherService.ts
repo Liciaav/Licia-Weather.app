@@ -43,7 +43,7 @@ class WeatherService {
   }
 
   // Create fetchLocationData method
-  private async fetchLocationData(query: string): Promise<Coordinates> {
+  private async fetchLocationData(query: string) {
     try {
       const response = await fetch(query);
       if (!response.ok) throw new Error('Network response was not ok');
@@ -68,7 +68,7 @@ class WeatherService {
 
   // Create buildGeocodeQuery method
   private buildGeocodeQuery(city: string): string {
-    return `${this.baseURL}/geocode/v1/json?q=${encodeURIComponent(city)}&key=${this.apiKey}`;
+    return `${this.baseURL}/geo/1.0/direct?q=${city}&appid=${this.apiKey}`;
   }
 
   // Create buildWeatherQuery method
@@ -77,14 +77,14 @@ class WeatherService {
   }
 
   // Create fetchAndDestructureLocationData method
-  private async fetchAndDestructureLocationData(query: string): Promise<Coordinates> {
+  private async fetchAndDestructureLocationData(query: string) {
     const url = this.buildGeocodeQuery(query);
     const response = await this.fetchLocationData(url);
     return this.destructureLocationData(response);
   }
 
   // Create fetchWeatherData method
-  private async fetchWeatherData(coordinates: Coordinates): Promise<Weather[]> {
+  private async fetchWeatherData(coordinates: Coordinates) {
     const response = await fetch(this.buildWeatherQuery(coordinates));
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
@@ -121,7 +121,7 @@ class WeatherService {
   }
 
   // Complete getWeatherForCity method
-  async getWeatherForCity(city: string): Promise<Weather[]> {
+  async getWeatherForCity(city: string){
     const coordinates = await this.fetchAndDestructureLocationData(city);
     if (coordinates) {
       const weatherData = await this.fetchWeatherData(coordinates);
